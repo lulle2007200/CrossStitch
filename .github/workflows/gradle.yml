@@ -19,6 +19,16 @@ jobs:
         uses: gradle/actions/setup-gradle@v6
       - name: Build
         run: ./gradlew build
+      - name: Upload built jar
+        uses: actions/upload-artifact@v7
+        with:
+          name: build-jar
+          path: |
+            build/libs/*.jar
+            !build/libs/*-sources.jar
+            !build/libs/*-dev.jar
+            !build/libs/*-javadoc.jar
+          if-no-files-found: error
       - name: Store failure reports
         if: failure()
         uses: actions/upload-artifact@v7
